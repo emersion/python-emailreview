@@ -123,6 +123,66 @@ def find_block(ref_block, block, start=0):
 
 	return regions
 
+def trim_google_groups_footer_lines(lines):
+	"""
+	remote a google groups footer. it has the following format where the `--`
+	defines the start of an optional custom message and the `---` defines the
+	default message.
+
+		--
+		optional custom message
+		---
+		You received this message ...
+		To unsubscribe from this group ...
+		To view this discussion on the web visit ...
+
+	this handles the default and custom messages, and checks that `--` does not
+	appear to mark the beginning of the git format patch version footer.
+	"""
+	def unquoted(text):
+		return re.match("[\> ]*(.*)", text).group(1)
+
+	custom = None    # top of the custom message
+	default = None   # bottom of the default message
+
+	for i in reversed(range(len(lines))):
+		line = unquoted(lines[i])
+		# find the bottom of the default message
+		if line.strip().startswith("To view this discussion on the web visit"):
+			if default is None:
+				default = i
+			continue
+
+		# stop if we find the top of a custom message
+		if line.strip() == "--":
+			custom = i
+			break
+
+	# be very conservative. we'll handle a custom message if the default
+	# google group footer is present. but otherwise the problem is the more
+	# general problem of filtering out signatures and needs more work.
+	if default is None:
+		return lines
+
+	# it wasn't actually a google groups default footer
+	trim_from = default - 3
+	if trim_from < 0 or unquoted(lines[trim_from]).strip() != "---":
+		return lines
+
+	# ignore custom if it looks like a git version footer
+	if custom is not None:
+		if not re.match("^\d+\.\d+(\.\d+)?$", unquoted(lines[custom+1]).strip()):
+			trim_from = custom
+
+	return lines[:trim_from]
+
+def trim_google_groups_footer_blocks(blocks):
+	blocks = list(filter(lambda b: isinstance(b, Quote), blocks))
+	if not blocks:
+		return
+	block = blocks[-1]
+	block.lines = trim_google_groups_footer_lines(block.lines)
+
 def match_quotes(blocks, in_reply_to):
 	in_reply_to_text = get_text(in_reply_to)
 	in_reply_to_lines = [l.strip() for l in in_reply_to_text.splitlines()]
@@ -170,6 +230,7 @@ def trim_noisy_text(blocks):
 def trim_quotes_footer(blocks):
 	# TODO: make footers configurable
 	# TODO: only trim for the last quotes
+	trim_google_groups_footer_blocks(blocks)
 	for block in blocks:
 		if isinstance(block, Quote):
 			# Trim retarded mailing list footers

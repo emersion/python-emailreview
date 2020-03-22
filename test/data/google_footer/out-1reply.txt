@@ -1,0 +1,15 @@
+The following patches are available at:
+[inline thread by dest <dest@email.com> at Fri, 20 Mar 2020 19:03:37 -0700]
+| This fix is great. Thanks.
+
+    git@github.com:user/repo.git branch
+
+Noah Watkins (1):
+  subject: line
+
+ tools/commands.cc | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+-- 
+2.21.0
+

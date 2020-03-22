@@ -51,5 +51,13 @@ class ParseTestCase(unittest.TestCase):
 
 		self.assertEqual(got, want)
 
+	def test_google_footer_reply(self):
+		patch = self._load_msg_from_file("google_footer/orig.eml")
+		reply1 = self._load_msg_from_file("google_footer/first-reply.eml")
+		thread = emailthreads.parse([patch, reply1])
+		got = self._normalize(str(thread))
+		want = self._read_file("google_footer/out-1reply.txt")
+		self.assertEqual(got, want)
+
 if __name__ == '__main__':
 	unittest.main()

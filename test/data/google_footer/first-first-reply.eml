@@ -1,0 +1,33 @@
+Date: Sat, 21 Mar 2020 15:43:59 -0700
+From: Noah Watkins <noah@email.com>
+To: dest <dest@email.com>
+Subject: Re: [PATCH v1 0/1] fixing stuff
+Message-ID: <0.0-2-noah@email.com>
+In-Reply-To: <0.0-1-dest@email.com>
+
+On Fri, Mar 20, 2020 at 07:03:37PM -0700, dest wrote:
+>On Fri, Mar 20, 2020 at 04:56:46PM -0700, Noah Watkins wrote:
+>> The following patches are available at:
+>
+>This fix is great. Thanks.
+>
+>>
+>>     git@github.com:user/repo.git branch
+>>
+>> Noah Watkins (1):
+>>   subject: line
+
+Should I submit again with a fixed commit message?
+>>
+>>  tools/commands.cc | 17 ++++++++++++-----
+>>  1 file changed, 12 insertions(+), 5 deletions(-)
+>>
+>> --
+>> 2.21.0
+>>
+>> --
+>> Some optional message.
+>> ---
+>> You received this message because you are subscribed to the Google Groups group.
+>> To unsubscribe from this group and stop receiving emails from it, send an email to x@x.com
+>> To view this discussion on the web visit https://groups.google.com/x

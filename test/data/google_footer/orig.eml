@@ -1,0 +1,19 @@
+From: Noah Watkins <noah@email.com>
+To: dest@email.com
+Subject: [PATCH v1 0/1] fixing stuff
+Date: Fri, 20 Mar 2020 16:56:46 -0700
+Message-Id: <0.0-1-noah@email.com>
+
+The following patches are available at:
+
+    git@github.com:user/repo.git branch
+
+Noah Watkins (1):
+  subject: line
+
+ tools/commands.cc | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
+
+-- 
+2.21.0
+
